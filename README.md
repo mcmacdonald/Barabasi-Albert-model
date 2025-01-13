@@ -1,0 +1,1 @@
+# Barab-si-Albert-model
