@@ -1,1 +1,1 @@
-# Barab-si-Albert-model
+# Barabasi-Albert-model
