@@ -1,15 +1,12 @@
 #-------------------------------------------------------------
 
-# File 02: Fiting power law distributions (B-A models)
-
-# call packages
-library('igraph')
+# file 02: fit power law distributions (B-A models)
 
 #-------------------------------------------------------------
 
 
 
-# Function to estimate degree scaling exponents in networks ---------------------------------------------
+# function to estimate degree scaling exponents in networks ---------------------------------------------
 pk = function(graph) {
   require("igraph")
   
@@ -21,6 +18,7 @@ pk = function(graph) {
     loops = FALSE, 
     normalized = FALSE
     )
+  # calculate degree distribution
   dd = igraph::degree.distribution(
     graph = graph, 
     mode = "all", 
@@ -41,32 +39,35 @@ pk = function(graph) {
   # scaling coefficients
   m = lm(log(p) ~ log(degree))
   b = coef(m)
-  print(summary(m))
-  print(confint.lm(m)) # 95% CIs
-  print(paste("N =", nobs(m) 
-              ) 
-        )
-  line  = function(x) exp(b[[1]] + b[[2]] * log(x))
   alpha = -b[[2]]
-  R2    = summary(m)$r.squared
-  print(paste("Alpha =", round(x = alpha, digits = 3) 
-              ) 
-        )
-  print(paste("R2 =", round(x = R2, digits = 3)
-              )
-        )
+  cat("alpha: "); cat(round(m, digits = 2))
   
-  # plot the linear regression
+  # calculate the standard error
+  # don't run:
+  # print(confint.lm(m)) # 95% CIs
+  # print(paste("N =", nobs(m) 
+    #          ) 
+    #    )
+  
+  # I use Gabaix & Ibragimov's method to calculate standard errors:
+  # https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=aCSds20AAAAJ&citation_for_view=aCSds20AAAAJ:UebtZRa9Y70C
+  n <- igraph::ecount(g)    # dyads
+  q <- abs(b) * sqrt(2/n)   # error
+  
+  # probable range of the slope
+  hi <- alpha + (q * 1.96); hi <- round(hi, digits = 2)
+  lo <- alpha - (q * 1.96); lo <- round(lo, digits = 2)
+  cat("range: "); cat("["); cat(hi); cat(", "); cat(lo); cat("]")
+  # cat("\n"); cat("\n")
+
+  # R-squared
+  R2    = summary(m)$r.squared
+  cat("R2 = "); cat(round(R2, digits = 2))
+  
+  # plot the slope
+  line  = function(x) exp(b[[1]] + b[[2]] * log(x))
   k1 <- 1    # min degree
-  kn <- max( # max degree
-    igraph::degree(
-      graph = graph, 
-      v = igraph::V(graph), 
-      mode = "total", 
-      loops = FALSE, 
-      normalized = FALSE
-      )
-    ) 
+  kn <- max(d) # max degree
   options(scipen = 999) # turn off scientific notation in Y-axis
   plot(p ~ degree, 
        log = "xy",
@@ -74,7 +75,7 @@ pk = function(graph) {
        ylim = c(0.0001, 1), # y-axis scale
        xlab = "degree k (log)", 
        ylab = "probability k (log)", 
-       main = "SCALING IN DEGREE CENTRALITY",
+       main = "Scaling in criminal networks",
        pch = 1, 
        cex = 2)
   curve(line, 
@@ -83,7 +84,6 @@ pk = function(graph) {
         add = TRUE, 
         n = length(d)
         )
-  # close function
 }
 
 # plot results -------------------------
