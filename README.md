@@ -12,8 +12,6 @@ The pk() command calculates the gradient of the slope and standard errors that p
 
 Further, this function includes adjusments to the calculation of the scaling exponent based on the critique of this model by Clauset et al. (2009). The first is that I use the procedures in Gabaix & Ibragimov (2011) to calculate the standard error of the slope [Clauset et al. (2009) explain why ordinary least squares does not accurately calculate the standard error of the power-law slope]. The second is that the function provides the option to use the cumulative distribution function (CDF) of the degree distribution, rather than the probability distribution function (PDF) of the degree distribution to caculate the model parameters [Again, Clauset et al. (2009) explain why the CDF provides better estimates of the scaling exponent than the PDF].
 
-Clauset et al. (2009) explain why ordinary least squares does not accurately calculate the standard error of the power-law slop
-
 I illustrate the procedures on different types of social networks. The original data is published by The Mitchell Centre for Social Network Analysis, University of Manchester [https://sites.google.com/site/ucinetsoftware/datasets/covert-networks].
 
 REFERENCES:
