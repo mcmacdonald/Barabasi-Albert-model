@@ -5,7 +5,14 @@
 #------------------------------------------------------------------
 
 # function to estimate degree scaling exponents in networks ---------------------------------------------
-pk = function(graph) {
+pk = function(graph, cdf) {
+  
+  # notes
+  # graph = igraph object
+  # cdf = TRUE calculates the cumulative distribution function CDF)
+  # cdf = FALSE calculates the probability distribution function (PDF) 
+  
+  # required packages
   require("igraph")
   
   # calculate degree
@@ -20,7 +27,7 @@ pk = function(graph) {
   dd = igraph::degree.distribution(
     graph = graph, 
     mode = "all", 
-    cumulative = FALSE
+    cumulative = cdf
     )
   
   # centralities min - max range
@@ -38,7 +45,7 @@ pk = function(graph) {
   m = lm(log(p) ~ log(degree))
   b = coef(m)
   alpha = b[[2]]
-  message("scaling exponent and 95% confidence intervals"); cat("\n")
+  message("Scaling exponent and 95% confidence intervals"); cat("\n")
   cat("alpha = "); cat(round(alpha, digits = 2)); cat("\n"); cat("\n")
   
   # calculate the standard error
@@ -56,12 +63,19 @@ pk = function(graph) {
   # 95% confidence intervals
   hi <- alpha + (q * 1.96); hi <- round(hi, digits = 2)
   lo <- alpha - (q * 1.96); lo <- round(lo, digits = 2)
-  cat("95% CI = "); cat("["); cat(hi); cat(", "); cat(lo); cat("]")
+  cat("95% CIs = "); cat("["); cat(hi); cat(", "); cat(lo); cat("]")
   cat("\n"); cat("\n")
   
   # R-squared
   R2 = summary(m)$r.squared
-  cat("R-squared = "); cat(round(R2, digits = 2))
+  cat("R-squared = "); cat(round(R2, digits = 2)); cat("\n"); cat("\n")
+
+  # message on computation
+  if(cdf == TRUE){
+    message("Note: the cumulative distribution function is used to calculate the scaling exponent.")
+  } else {
+    message("Note: the probability distribution function is used to calculate the scaling exponent.")
+  }
   
   # plot the slope
   line  = function(x) exp(b[[1]] + b[[2]] * log(x))
@@ -82,19 +96,32 @@ pk = function(graph) {
         lwd = 2, 
         add = TRUE, 
         n = length(d)
-  )
+        )
 }
 
-# plot results -------------------------
-pk(graph = r_siren)
-pk(graph = r_togo)
-pk(graph = d_caviar)
-pk(graph = d_cocaine)
-pk(graph = d_heroin)
-pk(graph = d_cielnet)
-pk(graph = g_ity)
-pk(graph = g_ldn)
-pk(graph = g_mtl)
-pk(graph = m_infinito)
+# plot results for the PDF -------------------------
+pk(graph = r_siren, cdf = FALSE)
+pk(graph = r_togo, cdf = FALSE)
+pk(graph = d_caviar, cdf = FALSE)
+pk(graph = d_cocaine, cdf = FALSE)
+pk(graph = d_heroin, cdf = FALSE)
+pk(graph = d_cielnet, cdf = FALSE)
+pk(graph = g_ity, cdf = FALSE)
+pk(graph = g_ldn, cdf = FALSE)
+pk(graph = g_mtl, cdf = FALSE)
+pk(graph = m_infinito, cdf = FALSE)
+
+
+# plot results for the CDF -------------------------
+pk(graph = r_siren, cdf = TRUE)
+pk(graph = r_togo, cdf = TRUE)
+pk(graph = d_caviar, cdf = TRUE)
+pk(graph = d_cocaine, cdf = TRUE)
+pk(graph = d_heroin, cdf = TRUE)
+pk(graph = d_cielnet, cdf = TRUE)
+pk(graph = g_ity, cdf = TRUE)
+pk(graph = g_ldn, cdf = TRUE)
+pk(graph = g_mtl, cdf = TRUE)
+pk(graph = m_infinito, cdf = TRUE)
 
 # ... close .R script
