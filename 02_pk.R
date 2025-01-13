@@ -98,28 +98,28 @@ pk = function(graph, cdf) {
 }
 
 # plot results for the PDF -------------------------
-pk(graph = r_siren, cdf = FALSE)
-pk(graph = r_togo, cdf = FALSE)
-pk(graph = d_caviar, cdf = FALSE)
-pk(graph = d_cocaine, cdf = FALSE)
-pk(graph = d_heroin, cdf = FALSE)
-pk(graph = d_cielnet, cdf = FALSE)
-pk(graph = g_ity, cdf = FALSE)
-pk(graph = g_ldn, cdf = FALSE)
-pk(graph = g_mtl, cdf = FALSE)
-pk(graph = m_infinito, cdf = FALSE)
+pk(graph = siren, cdf = FALSE)
+pk(graph = togo, cdf = FALSE)
+pk(graph = caviar, cdf = FALSE)
+pk(graph = cocaine, cdf = FALSE)
+pk(graph = heroin, cdf = FALSE)
+pk(graph = cielnet, cdf = FALSE)
+pk(graph = italian, cdf = FALSE)
+pk(graph = london, cdf = FALSE)
+pk(graph = montreal, cdf = FALSE)
+pk(graph = infinito, cdf = FALSE)
 
 
 # plot results for the CDF -------------------------
-pk(graph = r_siren, cdf = TRUE)
-pk(graph = r_togo, cdf = TRUE)
-pk(graph = d_caviar, cdf = TRUE)
-pk(graph = d_cocaine, cdf = TRUE)
-pk(graph = d_heroin, cdf = TRUE)
-pk(graph = d_cielnet, cdf = TRUE)
-pk(graph = g_ity, cdf = TRUE)
-pk(graph = g_ldn, cdf = TRUE)
-pk(graph = g_mtl, cdf = TRUE)
-pk(graph = m_infinito, cdf = TRUE)
+pk(graph = siren, cdf = TRUE)
+pk(graph = togo, cdf = TRUE)
+pk(graph = caviar, cdf = TRUE)
+pk(graph = cocaine, cdf = TRUE)
+pk(graph = heroin, cdf = TRUE)
+pk(graph = cielnet, cdf = TRUE)
+pk(graph = italian, cdf = TRUE)
+pk(graph = london, cdf = TRUE)
+pk(graph = montreal, cdf = TRUE)
+pk(graph = infinito, cdf = TRUE)
 
 # ... close .R script
