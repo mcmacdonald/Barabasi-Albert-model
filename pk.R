@@ -1,10 +1,8 @@
-#-------------------------------------------------------------
+#------------------------------------------------------------------
 
-# file 02: fit power law distributions (B-A models)
+# file 02: fit power law distributions by the Barabasi-Albert model
 
-#-------------------------------------------------------------
-
-
+#------------------------------------------------------------------
 
 # function to estimate degree scaling exponents in networks ---------------------------------------------
 pk = function(graph) {
@@ -39,30 +37,31 @@ pk = function(graph) {
   # scaling coefficients
   m = lm(log(p) ~ log(degree))
   b = coef(m)
-  alpha = -b[[2]]
-  cat("alpha: "); cat(round(m, digits = 2))
+  alpha = b[[2]]
+  message("scaling exponent and 95% confidence intervals"); cat("\n")
+  cat("alpha = "); cat(round(alpha, digits = 2)); cat("\n"); cat("\n")
   
   # calculate the standard error
   # don't run:
   # print(confint.lm(m)) # 95% CIs
   # print(paste("N =", nobs(m) 
-    #          ) 
-    #    )
+  #          ) 
+  #    )
   
   # I use Gabaix & Ibragimov's method to calculate standard errors:
   # https://scholar.google.ca/citations?view_op=view_citation&hl=en&user=aCSds20AAAAJ&citation_for_view=aCSds20AAAAJ:UebtZRa9Y70C
-  n <- igraph::ecount(g)    # dyads
-  q <- abs(b) * sqrt(2/n)   # error
+  n <- igraph::ecount(graph)    # dyads
+  q <- abs(alpha) * sqrt(2/n)   # error
   
-  # probable range of the slope
+  # 95% confidence intervals
   hi <- alpha + (q * 1.96); hi <- round(hi, digits = 2)
   lo <- alpha - (q * 1.96); lo <- round(lo, digits = 2)
-  cat("range: "); cat("["); cat(hi); cat(", "); cat(lo); cat("]")
-  # cat("\n"); cat("\n")
-
+  cat("95% CI = "); cat("["); cat(hi); cat(", "); cat(lo); cat("]")
+  cat("\n"); cat("\n")
+  
   # R-squared
-  R2    = summary(m)$r.squared
-  cat("R2 = "); cat(round(R2, digits = 2))
+  R2 = summary(m)$r.squared
+  cat("R-squared = "); cat(round(R2, digits = 2))
   
   # plot the slope
   line  = function(x) exp(b[[1]] + b[[2]] * log(x))
@@ -79,11 +78,11 @@ pk = function(graph) {
        pch = 1, 
        cex = 2)
   curve(line, 
-        col = "black", 
+        col = "firebrick1", 
         lwd = 2, 
         add = TRUE, 
         n = length(d)
-        )
+  )
 }
 
 # plot results -------------------------
@@ -97,7 +96,5 @@ pk(graph = g_ity)
 pk(graph = g_ldn)
 pk(graph = g_mtl)
 pk(graph = m_infinito)
-
-
 
 # ... close .R script
