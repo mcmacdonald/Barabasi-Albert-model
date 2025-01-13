@@ -30,19 +30,17 @@ pk = function(graph, cdf) {
     cumulative = cdf
     )
   
-  # centralities min - max range
-  degree = 1:max(d)
-  
-  # calculate probability distribution for degree centrality
+  # probability distribution for degree centrality
   p = dd[-1]
-  pk1 = which(p != 0) # remove degree = 0 ... i.e., p > 0
-  p = p[pk1] # subset
-  
-  # overwrite degree distribution when degree centrality > 0
-  degree = degree[pk1]
+  p0 = which(p != 0) # remove degree = 0 ... i.e., p > 0
+  pk  = p[p0] # subset
+ 
+  # degree distribution
+  degree = 1:max(d) # centralities min - max range
+  degree = degree[p0]  # overwrite degree distribution when degree centrality > 0
   
   # scaling coefficients
-  m = lm(log(p) ~ log(degree))
+  m = lm(log(pk) ~ log(degree))
   b = coef(m)
   alpha = b[[2]]
   message("Scaling exponent and 95% confidence intervals"); cat("\n")
