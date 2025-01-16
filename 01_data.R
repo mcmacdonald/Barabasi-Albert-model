@@ -21,7 +21,7 @@ import = function(file){
   data = data[-1, -1] # drop first row, column (i.e, vertex labels)
   return(data)
 }
-siren    = import(file = "https://raw.githubusercontent.com/mcmacdonald/criminal-networks/master/data/CAVIAR_FULL.csv") # siren auto theft
+siren    = import(file = "https://raw.githubusercontent.com/mcmacdonald/criminal-networks/master/data/SIREN.csv") # siren auto theft
 togo     = import(file = "https://raw.githubusercontent.com/mcmacdonald/criminal-networks/master/data/TOGO.csv") # togo auto theft
 caviar   = import(file = "https://raw.githubusercontent.com/mcmacdonald/criminal-networks/master/data/CAVIAR_FULL.csv") # caviar drug trafficking network - Morselli
 cocaine  = import(file = "https://raw.githubusercontent.com/mcmacdonald/criminal-networks/master/data/COCAINE_DEALING.csv") # NY cocaine trafficking network - Natarajan
