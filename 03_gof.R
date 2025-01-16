@@ -17,7 +17,7 @@
 d = function(graph){
 
   # required packages
-  required("igraph")
+  require("igraph")
   
   # A degree distribution of the random graph
   d = igraph::degree(
