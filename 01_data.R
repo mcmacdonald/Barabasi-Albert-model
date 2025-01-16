@@ -42,7 +42,7 @@ infinito = igraph::graph.incidence(
 
 # bipariate projection of the incidence/event two-mode network
 infinito = igraph::bipartite.projection(graph = infinito)
-infinito = m_infinito$proj1 # keep the unipartite projection
+infinito = infinito$proj1 # keep the unipartite projection
 infinito = igraph::get.adjacency( # convert graph to adj matrix
   graph = infinito,
   type = "both"
